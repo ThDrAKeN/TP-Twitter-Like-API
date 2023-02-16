@@ -9,7 +9,7 @@ const RetweetSchema = new Schema({
     required: true,
   },
   tweet_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Tweet",
     required: true,
   },
