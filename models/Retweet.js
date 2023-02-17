@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 
 const RetweetSchema = new Schema({
   user: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   tweet_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Tweet",
     required: true,
   },

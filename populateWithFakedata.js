@@ -2,12 +2,6 @@ const { faker } = require("@faker-js/faker");
 const axios = require("axios");
 
 
-const buildFakeTweet = async (x) => {
-  for (i = 0; i < x; i++) {
-    faketweet.push(faker.datatype.uuid());
-  }
-}
-
 const pushUserToDb = async (x) => {
   for (i = 0; i < x; i++) {
     await axios.post("http://localhost:692/users/create", {
@@ -70,7 +64,7 @@ const control = async (x) => {
   await pushRetweetToDb(x);
 };
 
-control(200);
+control(2);
 
 
 

@@ -10,8 +10,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'Connection error:'));
 
+
 router.route("/").get((req, res) => {
-  // Find retourne une promise avec les users dans la base
   User.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json("Error: " + err));
@@ -20,7 +20,6 @@ router.route("/").get((req, res) => {
 router.route("/create").post((req, res) => {
   const name = req.body.name;
   const email = req.body.email;
-
 
   const newUser = new User({
     name,
