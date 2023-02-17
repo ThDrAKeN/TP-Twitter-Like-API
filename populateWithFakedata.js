@@ -11,9 +11,9 @@ const buildFakeTweet = async (x) => {
 const pushUserToDb = async (x) => {
   for (i = 0; i < x; i++) {
     await axios.post("http://localhost:692/users/create", {
-        name: faker.name.firstName(),
-        email: faker.internet.email(),
-      })
+      name: faker.name.firstName(),
+      email: faker.internet.email(),
+    })
       .then((res) => {
         console.log(res.data);
       })
@@ -24,31 +24,34 @@ const pushUserToDb = async (x) => {
 }
 
 const pushTweetToDb = async (x) => {
+  let users = await axios.get("http://localhost:692/users/")
   for (i = 0; i < x; i++) {
-    await axios
-      .post("http://localhost:692/tweet/create",{
+  await axios
+    .post("http://localhost:692/tweet/create", {
+      user: users.data[i]._id,
+      content: faker.lorem.sentence(),
+      comments: {
         user: faker.datatype.uuid(),
-        content: faker.lorem.sentence(),
-        comments: {
-          user: faker.datatype.uuid(),
-          desc: faker.lorem.sentence(),
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.statusText);
-      });
-  }
-}
+        desc: faker.lorem.sentence(),
+      },
+    })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err.response.statusText);
+    });
+}}
 
 const pushRetweetToDb = async (x) => {
+  let users = await axios.get("http://localhost:692/users/")
+  let tweets = await axios.get("http://localhost:692/tweet/")
+  
   for (i = 0; i < x; i++) {
     await axios
       .post("http://localhost:692/retweet/create", {
-        user: faker.datatype.uuid(),
-        tweet_id: faker.datatype.uuid(),
+        user: users.data[i]._id,
+        tweet_id: tweets.data[i]._id,
         content: faker.lorem.sentence(),
       })
       .then((res) => {
